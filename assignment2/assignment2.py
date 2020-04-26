@@ -82,7 +82,7 @@ def get_submissions(thisTestId):
     global scantronId
     global submissions
     print (scantronId)
-    submissions = sqlite_operations.getScantron(thisTI, 1)
+    submissions = sqlite_operations.getScantron(thisTI, scantronId)
     print(submissions)
     solution = sqlite_operations.getSolution(thisTI)
     for i in range (len(submissions)):
