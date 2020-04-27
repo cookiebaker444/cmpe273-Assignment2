@@ -43,12 +43,13 @@ def create_solution():
 def post_scantron(thistestId):
     testId = int(thistestId)
     global scantronId 
-    with open('scantron.json') as f:
+    with open('scantron-1.json') as f:
         jFile = json.load(f)
         thisScantron = jFile
         thisScantron["test_id"] = testId
         scantronId = scantronId + 1
         jFile["scantron_id"] = scantronId
+        jFile["scantron_url"] = "http://localhost:5000/files/scantron-" + str(scantronId) + ".json"
         sqlite_operations.addScantron(testId, scantronId)
         #sol = {}
         sol = sqlite_operations.getSolution(int(thistestId))
