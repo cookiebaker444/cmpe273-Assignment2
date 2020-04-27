@@ -24,15 +24,18 @@ def create_solution():
     global testId
     ##print(request.get_json())
     #typedName = input("please input the name of the student:")
-    with open('solution.json') as f:
-        jFile = json.load(f)
-        testId += 1
-        testSol = jFile
-        testSol["test_id"] = testId
-        testSol["submission"]= submissions
-        f.close()
-    sqlite_operations.addSolution(testId)
-    return testSol
+    testId = testId + 1
+    req = request.json
+    subject = req["subject"]
+    answer_keys = req["answer_keys"]
+    testInfo = {
+        "test_id" : testId,
+        "subject" : subject,
+        "answer_keys" : answer_keys,
+        "submissions" : [] 
+    }
+    sqlite_operations.addSolution(testId, testInfo)
+    return testInfo
 
 
 
