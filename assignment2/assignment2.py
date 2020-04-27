@@ -93,6 +93,9 @@ def get_submissions(thisTestId):
         submissions[i] = sqlite_operations.getScore(solution, submissions[i])
     
     solution["submissions"] = submissions
+    f = open("output.txt", "w")
+    f.write(str(solution))
+    f.close()
     return solution
 
     
