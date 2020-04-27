@@ -1,29 +1,28 @@
 import sqlite3
 import json
 
-def addSolution(testId):
-      with open('solution.json') as f:
-            jFile = json.load(f)
-            conn = sqlite3.connect('test.db')
-            print ("Opened database successfully")
-            conn.execute('''CREATE TABLE IF NOT EXISTS TESTSOLUTION 
-                  (TESTID        INT     NOT NULL,
-                  SUBJECT       TEXT        NOT NULL,
-                  QUESTIONNUM   INT     NOT NULL,
-                  ANSWER        CHAR(1)     NOT NULL,
-                  PRIMARY KEY(TESTID, QUESTIONNUM));''')
-            print ("Table created successfully")
-            for key in jFile["answer_keys"]:
-                  curKey = jFile["answer_keys"][key]
-                  testNo = testId
-                  que = int(key)
-                  sub = jFile["subject"]
-                  temp = (testNo, sub, que, curKey)
-                  c = conn.cursor()
-                  conn.execute("INSERT INTO TESTSOLUTION (TESTID,SUBJECT, QUESTIONNUM, ANSWER) VALUES (?,?,?,?)", temp)
-                  conn.commit()
-            print ("Records created successfully")
-            conn.close()
+def addSolution(testId, jFile):
+      
+      conn = sqlite3.connect('test.db')
+      print ("Opened database successfully")
+      conn.execute('''CREATE TABLE IF NOT EXISTS TESTSOLUTION 
+            (TESTID        INT     NOT NULL,
+            SUBJECT       TEXT        NOT NULL,
+            QUESTIONNUM   INT     NOT NULL,
+            ANSWER        CHAR(1)     NOT NULL,
+            PRIMARY KEY(TESTID, QUESTIONNUM));''')
+      print ("Table created successfully")
+      for key in jFile["answer_keys"]:
+            curKey = jFile["answer_keys"][key]
+            testNo = testId
+            que = int(key)
+            sub = jFile["subject"]
+            temp = (testNo, sub, que, curKey)
+            c = conn.cursor()
+            conn.execute("INSERT INTO TESTSOLUTION (TESTID,SUBJECT, QUESTIONNUM, ANSWER) VALUES (?,?,?,?)", temp)
+            conn.commit()
+      print ("Records created successfully")
+      conn.close()
 '''
 conn.execute("INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
       VALUES (1, 'Paul', 32, 'California', 20000.00 )")
@@ -31,7 +30,7 @@ conn.execute("INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
 '''
 
 def addScantron(testId, scanId):
-      with open('scantron.json') as f:
+      with open('scantron-1.json') as f:
             jFile = json.load(f)
       conn = sqlite3.connect('test.db')
       print ("Opened database successfully")
